@@ -68,10 +68,12 @@ userdataRouter.get('/:userId',async(req,res)=>{
     if(!decodedToken){
         return res.status(400).send({message:"enter valid credentials"})
     }
+    console.log(userId,decodedToken.id)
     if(decodedToken.id===userId){
         return res.status(400).redirect("../../")
     }
     const person = await User.findById(userId).populate("CommentsToMe")
+    console.log(person)
     return res.status(200).send(person)
 })
 userdataRouter.post('/postcomment',async(req,res)=>{
@@ -91,7 +93,7 @@ userdataRouter.post('/postcomment',async(req,res)=>{
     })
     let user = await User.findById(data.userId)
     let sender = await User.findById(decodedToken.id)
-    sender.CommentsToMe=[...sender.CommentsByMe,id]
+    sender.CommentsByMe=[...sender.CommentsByMe,id]
     user.CommentsToMe=[...user.CommentsToMe,id]
     await user.save()
     await sender.save()
