@@ -13,6 +13,7 @@ try{
 }catch(error){
     console.log('error')
 }
+app.use(express.static('build'))
 app.use(cors())
 app.use('/api/login',loginRouter)
 app.use('/api/signup',signupRouter)
