@@ -3,9 +3,6 @@ const User = require('../models/user')
 const bcrypt = require("bcrypt")
 signupRouter.post('/',async(req,res)=>{
     const body = req.body
-    if(!(body.email && body.password)){
-        return res.status(400).send({error:"Enter valid user credentials"})
-    }
     const listOfUsers = await User.find({Email:body.email})
     let result = listOfUsers.find((x)=>x.Email==body.email)
     if(result){
